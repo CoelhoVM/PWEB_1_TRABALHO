@@ -10,10 +10,22 @@
 </head>
 
 <body style="background-color: rgba(217, 217, 217, 0.10);">
+
+    <header>
+
+        <nav class="navbar bg-body-tertiary fixed-top"
+            style="display: flex; background-color: #fdf1d8 !important; padding: 1rem 1.5rem;  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);">
+
+            <div class="container-fluid">
+                <img src="/site/logo2.png" alt="Logo" class="mt-2" height="15%" width="15%">
+            </div>
+
+        </nav>
+    </header>
  
     <div class="container d-flex justify-content-center">
 
-        <div style="margin-top: 120px; padding: 50px; border-radius: 10px; width: 500px; box-shadow: 0 0 20px lightgray; background-color: white;">
+        <div style="margin-top: 180px; padding: 50px; border-radius: 10px; width: 500px; box-shadow: 0 0 20px lightgray; background-color: white;">
 
             <h2 class="text-center" style="margin-bottom: 30px">Login</h2>
         
