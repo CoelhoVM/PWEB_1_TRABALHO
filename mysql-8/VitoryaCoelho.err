@@ -1,0 +1,12 @@
+2025-06-16T13:04:09.775181Z 0 [Warning] [MY-010918] [Server] 'default_authentication_plugin' is deprecated and will be removed in a future release. Please use authentication_policy instead.
+2025-06-16T13:04:09.775198Z 0 [System] [MY-013169] [Server] C:\laragon\bin\mysql\mysql-8.0.30-winx64\bin\mysqld.exe (mysqld 8.0.30) initializing of server in progress as process 85144
+2025-06-16T13:04:09.777037Z 0 [ERROR] [MY-010457] [Server] --initialize specified but the data directory has files in it. Aborting.
+2025-06-16T13:04:09.777651Z 0 [ERROR] [MY-013236] [Server] The designated data directory C:\laragon\www\PWEB_1_TRABALHO\mysql-8\ is unusable. You can remove all files that the server added to it.
+2025-06-16T13:04:09.792054Z 0 [ERROR] [MY-010119] [Server] Aborting
+2025-06-16T13:04:09.792277Z 0 [System] [MY-010910] [Server] C:\laragon\bin\mysql\mysql-8.0.30-winx64\bin\mysqld.exe: Shutdown complete (mysqld 8.0.30)  MySQL Community Server - GPL.
+2025-06-17T12:21:48.428842Z 0 [Warning] [MY-010918] [Server] 'default_authentication_plugin' is deprecated and will be removed in a future release. Please use authentication_policy instead.
+2025-06-17T12:21:48.428889Z 0 [System] [MY-013169] [Server] C:\laragon\bin\mysql\mysql-8.0.30-winx64\bin\mysqld.exe (mysqld 8.0.30) initializing of server in progress as process 47732
+2025-06-17T12:21:48.436190Z 0 [ERROR] [MY-010457] [Server] --initialize specified but the data directory has files in it. Aborting.
+2025-06-17T12:21:48.459484Z 0 [ERROR] [MY-013236] [Server] The designated data directory C:\laragon\www\PWEB_1_TRABALHO\mysql-8\ is unusable. You can remove all files that the server added to it.
+2025-06-17T12:21:48.463291Z 0 [ERROR] [MY-010119] [Server] Aborting
+2025-06-17T12:21:48.463884Z 0 [System] [MY-010910] [Server] C:\laragon\bin\mysql\mysql-8.0.30-winx64\bin\mysqld.exe: Shutdown complete (mysqld 8.0.30)  MySQL Community Server - GPL.
