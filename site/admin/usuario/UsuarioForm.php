@@ -1,78 +1,132 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
 
+include "../db.class.php";
+
+$db = new db('usuarios');
+$data = null;
+$errors = [];
+$success = '';
+
+if (!empty($_POST)) {
+
+    $data = (object) $_POST;
+
+    if (empty(trim($_POST['username']))) {
+        $errors[] = "<li>O Username é obrigatório!</li>";
+    }
+
+    if (empty(trim($_POST['nome']))) {
+        $errors[] = "<li>O nome é obrigatório!</li>";
+    }
+
+    if (empty(trim($_POST['email']))) {
+        $errors[] = "<li>O email é obrigatório!</li>";
+    }
+
+    if (empty(trim($_POST['telefone']))) {
+        $errors[] = "<li>O telefone é obrigatório!</li>";
+    }
+
+    if (empty($errors)) {
+
+        try {
+           
+            if (!empty($_POST['senha'])) {
+                $_POST['senha'] = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+            } else {
+                unset($_POST['senha']); 
+            }
+
+            if (empty($_POST['id'])) {
+                $db->store($_POST);
+                $success = "Registro criado com sucesso!";
+            } else {
+                $db->update($_POST);
+                $success = "Registro atualizado com sucesso!";
+            }
+
+            echo "<script>
+                    setTimeout(() => window.location.href = 'UsuarioList.php', 1500);
+                </script>";
+
+        } catch (Exception $e) {
+            $errors[] = "Erro ao salvar: " . $e->getMessage();
+        }
+    }
+}
+
+if (!empty($_GET['id'])) {
+    $data = $db->find($_GET['id']);
+}
+?>
+
+<?php if (!empty($errors)) { ?>
+    <div class="alert alert-danger">
+        <strong>Erro ao salvar</strong>
+        <ul class="mb-0">
+            <?php foreach ($errors as $error) {
+                echo $error;
+            } ?>
+        </ul>
+    </div>
+<?php } ?>
+
+<?php if (!empty($success)) { ?>
+    <div class="alert alert-success">
+        <strong><?= $success ?></strong>
+    </div>
+<?php } ?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <title>Cadastro de Usuário</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário - Cadastro de usuario</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body style="background-color: rgba(217, 217, 217, 0.10);">
 
-<header>
+<div class="container">
 
-    <nav class="navbar bg-body-tertiary fixed-top"
-        style="display: flex; background-color: #fdf1d8 !important; padding: 1rem 1.5rem;  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);">
+    <h1 class="text-center" style="margin-top: 90px;">Cadastro de Usuários</h1>
 
-        <div class="container-fluid">
-            <img src="/site/logo2.png" alt="Logo" class="mt-2" height="15%" width="15%">
-        </div>
-
-    </nav>
-
-</header>
-    
-<div class="container d-flex justify-content-center">
-
-    <div style="margin-top: 150px; margin-bottom: 120px; padding: 50px; border-radius: 10px; width: 718px; box-shadow: 0 0 20px lightgray; background-color: white;">
-
-        <h2 class="text-center" style="margin-bottom: 30px">Cadastro</h2>
+    <div class="mt-5 p-5 mx-auto" style="margin-top: 150px; margin-bottom: 120px; width: 718px; background-color: white; border-radius: 10px; box-shadow: 0 0 20px lightgray;">
 
         <form action="UsuarioForm.php" method="post">
+            <input type="hidden" name="id" value="<?= $data->id ?? '' ?>">
 
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+                <input type="text" id="username" name="username" class="form-control" value="<?= $data->username ?? '' ?>" required>
             </div>
 
             <div class="mb-3">
                 <label for="nome" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="nome" name="nome" required>
+                <input type="text" id="nome" name="nome" class="form-control" value="<?= $data->nome ?? '' ?>" required>
             </div>
 
             <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" id="email" name="email" class="form-control" value="<?= $data->email ?? '' ?>" required>
             </div>
 
             <div class="mb-3">
                 <label for="telefone" class="form-label">Telefone</label>
-                <input type="tel" class="form-control" id="telefone" name="telefone">
+                <input type="tel" id="telefone" name="telefone" class="form-control" value="<?= $data->telefone ?? '' ?>" required>
             </div>
 
             <div class="mb-3">
-                <label for="senha" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="senha" name="senha" required>
+                <label for="senha" class="form-label">Senha <?= !empty($data->id) ? "(deixe em branco para não alterar)" : '' ?></label>
+                <input type="password" id="senha" name="senha" class="form-control">
             </div>
 
-            <button type="submit" class="btn btn-primary"
-                    style="background-color: #9a5b54; border-color: #9a5b54; margin-top: 20px; width: 100%">Cadastrar</button>
-
-            <div class="text-center" style="margin-top: 20px;">
-                <p>Já tem uma conta? <a href="../usuario/login.php" class="text-decoration-none" style="color: #9a5b54;">Faça login</a></p>
-            </div>
+            <button type="submit" class="btn btn-primary w-100" style="background-color: #9a5b54; border-color: #9a5b54;">Salvar</button>
 
         </form>
-
     </div>
-
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-7+9j8z4b1a56b5e8f8c4d3f7a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6" crossorigin="anonymous"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
