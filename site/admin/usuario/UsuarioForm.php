@@ -2,7 +2,12 @@
 
 include "../db.class.php";
 
+include_once "../../header.php";
+
 $db = new db('usuarios');
+
+$db->checkLogin();
+
 $data = null;
 $errors = [];
 $success = '';
@@ -61,7 +66,7 @@ if (!empty($_GET['id'])) {
 ?>
 
 <?php if (!empty($errors)) { ?>
-    <div class="alert alert-danger">
+    <div class="alert alert-danger mt-5 w-50 mx-auto">
         <strong>Erro ao salvar</strong>
         <ul class="mb-0">
             <?php foreach ($errors as $error) {
@@ -72,22 +77,10 @@ if (!empty($_GET['id'])) {
 <?php } ?>
 
 <?php if (!empty($success)) { ?>
-    <div class="alert alert-success">
+    <div class="alert alert-success mt-5 w-50 mx-auto">
         <strong><?= $success ?></strong>
     </div>
 <?php } ?>
-
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastro de Usuário</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body style="background-color: rgba(217, 217, 217, 0.10);">
-
-<div class="container">
 
     <h1 class="text-center" style="margin-top: 90px;">Cadastro de Usuários</h1>
 
@@ -125,8 +118,9 @@ if (!empty($_GET['id'])) {
 
         </form>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<?php
+
+include "../../footer.php"; 
+
+?>

@@ -11,8 +11,8 @@ if (!empty($_POST)) {
 
     $data = (object) $_POST; 
 
-    if (empty(trim($_POST['login']))) {
-        $errors[] = "<li>O login é obrigatorio</li>";
+    if (empty(trim($_POST['email']))) {
+        $errors[] = "<li>O e-mail é obrigatorio</li>";
     }
 
     if (empty(trim($_POST['senha']))) {
@@ -26,7 +26,7 @@ if (!empty($_POST)) {
 
                 session_start();
 
-                $_SESSION['login'] = $result->login;
+                $_SESSION['email'] = $result->email;
                 $_SESSION['nome'] = $result->nome;
                 $success = "Logado com sucesso!";
 
@@ -52,7 +52,7 @@ if (!empty($_GET['logout'])) {
 ?>
 
 <?php if (!empty($errors)) { ?>
-    <div class="alert alert-danger">
+    <div class="alert alert-danger mt-5 w-50 mx-auto">
         <strong>Erro ao salvar</strong>
         <ul class="mb-0">
             <?php foreach ($errors as $error) { ?>
@@ -63,7 +63,7 @@ if (!empty($_GET['logout'])) {
 <?php } ?>
 
 <?php if (!empty($success)) { ?>
-    <div class="alert alert-success">
+    <div class="alert alert-success mt-5 w-50 mx-auto">
         <strong>
             <?= $success ?>
         </strong>
@@ -88,7 +88,7 @@ if (!empty($_GET['logout'])) {
         <h1 class="mt-5 text-center">Bem vindo ao admin do Secret Recipe</h1>
         <p class="text-center" style="font-size: 1.2rem;">Faça login para acessar o painel de administração.</p>
 
-    </div>
+    </div> 
  
     <div class="container d-flex justify-content-center">
 
@@ -96,7 +96,7 @@ if (!empty($_GET['logout'])) {
 
             <h2 class="text-center" style="margin-bottom: 30px">Login</h2>
         
-            <form action="home.php" method="post">
+            <form action="" method="post">
 
                 <div class="mb-3">
                     <label for="email" class="form-label">E-mail</label>

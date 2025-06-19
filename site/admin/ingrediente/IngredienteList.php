@@ -4,7 +4,7 @@ include "../db.class.php";
 
 include_once "../../header.php";
 
-$db = new db('usuarios');
+$db = new db('ingredientes');
 
 $db->checkLogin();
 
@@ -20,19 +20,20 @@ if (!empty($_POST)) {
 
 ?>
 
-    <h1 class="text-center" style="margin-top: 90px;">Lista de Usuários</h1>
+    <h1 class="text-center" style="margin-top: 90px;">Lista de Ingredientes</h1>
 
-    <form action="./UsuarioList.php" method="post">
+    <form action="./IngredienteList.php" method="post">
 
         <div class="row mt-5">
 
             <div class="col-md-2">
+
                 <select name="tipo" class="form-select">
-                    <option value="username">Username</option>
-                    <option value="nome">Nome</option>
-                    <option value="email">Email</option>
-                    <option value="telefone">Telefone</option>
+                    <option value="titulo">Nome</option>
+                    <option value="modo_preparo">Quantidade</option>
+                    <option value="id_usuario">Id Receita</option>
                 </select>
+
             </div>
 
             <div class="col-md-6">
@@ -41,7 +42,7 @@ if (!empty($_POST)) {
 
             <div class="col-md-4">
                 <button type="submit" class="btn btn-primary">Buscar</button>
-                <a style="background-color: #9a5b54; border-color: #9a5b54;" href="./UsuarioForm.php" class="btn btn-secondary">Cadastrar</a>
+                <a style="background-color: #9a5b54; border-color: #9a5b54;" href="./IngredienteForm.php" class="btn btn-secondary">Cadastrar</a>
             </div>
 
         </div>
@@ -55,10 +56,9 @@ if (!empty($_POST)) {
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Username</th>
                     <th scope="col">Nome</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Telefone</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Id Receita</th>
                     <th scope="col">Ação</th>
                     <th scope="col">Ação</th>
                 </tr>
@@ -73,17 +73,16 @@ if (!empty($_POST)) {
                         echo "
                         <tr>
                             <th scope='row'>$item->id</th>
-                            <td>$item->username</td>
                             <td>$item->nome</td>
-                            <td>$item->email</td>
-                            <td>$item->telefone</td>
+                            <td>$item->quantidade</td>
+                            <td>$item->id_receita</td>
                             <td>
-                                <a title='Editar' href='./UsuarioForm.php?id=$item->id'><i class='fa-solid fa-pen-to-square'></i></a>
+                                <a title='Editar' href='./IngredienteForm.php?id=$item->id'><i class='fa-solid fa-pen-to-square'></i></a>
                             </td>
                             <td>
                                 <a  title='Deletar'
                                     onclick='return confirm(\"Deseja Excluir?\")'
-                                    href='./UsuarioList.php?id=$item->id'><i class='fa-solid fa-trash'></i></a>
+                                    href='./IngredienteList.php?id=$item->id'><i class='fa-solid fa-trash'></i></a>
                             </td>
                         </tr>
                         ";
@@ -95,8 +94,8 @@ if (!empty($_POST)) {
         </table>
     </div>
 
-<?php 
+<?php
 
-include_once "../../footer.php";
+include "../../footer.php";
 
 ?>

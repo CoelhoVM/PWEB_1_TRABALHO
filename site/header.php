@@ -16,7 +16,7 @@
 
     <?php
 
-    $hiddenPage = ['Login.php', 'UsuarioForm.php', 'home.php'];
+    $hiddenPage = ['Login.php', 'home.php'];
 
     $currentPage = basename($_SERVER['PHP_SELF']);
 

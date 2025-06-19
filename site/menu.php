@@ -11,9 +11,9 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
 
-      <ul class="navbar-nav">
+      <ul class="navbar-nav" style="margin-left: -140px;">
         <li class="nav-item">
-          <b><a style="color: #9a5b54; font-size: 20px"class="nav-link active" aria-current="page" href="/site/home.php">Início</a></b>
+          <b><a style="color: #9a5b54; font-size: 20px"class="nav-link active" aria-current="page" href="/site/home.php">Home</a></b>
         </li>
         <li class="nav-item">
           <a style="color: #9a5b54; font-size: 20px" class="nav-link" href="../usuario/UsuarioList.php">Usuários</a>
@@ -24,9 +24,13 @@
         <li class="nav-item">
           <a style="color: #9a5b54; font-size: 20px" class="nav-link" href="../comentario/ComentarioList.php">Comentários</a>
         </li>
+        <li class="nav-item">
+          <a style="color: #9a5b54; font-size: 20px" class="nav-link" href="../ingrediente/IngredienteList.php">Ingredientes</a>
+        </li>
       </ul>
 
     </div>
+    
 
     <a href="/site/index.php?logout=true" style="float: right;" class="btn btn-danger"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
 

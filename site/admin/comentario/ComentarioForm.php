@@ -2,10 +2,15 @@
 
 include "../db.class.php";
 
+include_once "../../header.php";
+
 $dbUsuario = new db('usuarios');
 $usuarios = $dbUsuario->all();
 
 $db = new db('comentarios');
+
+$db->checkLogin();
+
 $data = null;
 $errors = [];
 $success = '';
@@ -54,7 +59,7 @@ if (!empty($_GET['id'])) {
 ?>
 
 <?php if (!empty($errors)) { ?>
-    <div class="alert alert-danger">
+    <div class="alert alert-danger mt-5 w-50 mx-auto">
         <strong>Erro ao salvar</strong>
         <ul class="mb-0">
             <?php foreach ($errors as $error) echo $error; ?>
@@ -63,25 +68,11 @@ if (!empty($_GET['id'])) {
 <?php } ?>
 
 <?php if (!empty($success)) { ?>
-    <div class="alert alert-success">
+    <div class="alert alert-success mt-5 w-50 mx-auto">
         <strong><?= $success ?></strong>
     </div>
 <?php } ?>
  
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário - Comentários</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-</head>
-
-<body style="background-color: rgba(217, 217, 217, 0.10);">
-
-    <div class="container">
 
         <h1 class="text-center" style="margin-top: 90px;">Cadastro de Comentários</h1>
 
@@ -129,10 +120,8 @@ if (!empty($_GET['id'])) {
             </form>
         </div>
 
-    </div>
+<?php 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-7+9j8z4b1a56b5e8f8c4d3f7a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6" crossorigin="anonymous"></script>
-    
-</body>
-</html>
+include_once "../../footer.php"; 
+
+?>

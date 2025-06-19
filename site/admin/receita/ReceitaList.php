@@ -6,6 +6,10 @@ include_once "../../header.php";
 
 $db = new db('receitas');
 
+$dbIngredientes = new db('ingredientes');
+
+$db->checkLogin();
+
 if (!empty($_GET['id'])) {
     $db->destroy($_GET['id']);
 }
@@ -49,7 +53,7 @@ if (!empty($_POST)) {
 
     </form>
 
-    <div style="margin-top: 50px; padding: 30px; border-radius: 10px; box-shadow: 0 0 20px lightgray; background-color: white;">
+    <div style="margin-top: 50px; margin-bottom: 50px; padding: 30px; border-radius: 10px; box-shadow: 0 0 20px lightgray; background-color: white;">
 
         <table class="table table-striped mt-3">
 
@@ -61,6 +65,7 @@ if (!empty($_POST)) {
                     <th scope="col">Tempo de Prep.</th>
                     <th scope="col">Dificuldade</th>
                     <th scope="col">Id Usuário</th>
+                    <th scope="col">Ingredientes</th>
                     <th scope="col">Ação</th>
                     <th scope="col">Ação</th>
                 </tr>
@@ -68,32 +73,44 @@ if (!empty($_POST)) {
 
             <tbody>
 
-                <?php
+                <?php foreach ($dados as $item): ?>
 
-                foreach ($dados as $item) {
+                    <tr>
+                        <th scope="row"><?= $item->id ?></th>
+                        <td><?= $item->titulo ?></td>
+                        <td style="max-width: 300px"><?= $item->modo_preparo ?></td>
+                        <td><?= $item->tempo_preparo ?></td>
+                        <td><?= $item->dificuldade ?></td>
+                        <td><?= $item->id_usuario ?></td>
+                        <td>
+                            <ul style="padding-left: 16px;">
 
-                        echo "
-                        <tr>
-                            <th scope='row'>$item->id</th>
-                            <td>$item->titulo</td>
-                            <td>$item->modo_preparo</td>
-                            <td>$item->tempo_preparo</td>
-                            <td>$item->dificuldade</td>
-                            <td>$item->id_usuario</td>
-                            <td>
-                                <a title='Editar' href='./ReceitaForm.php?id=$item->id'><i class='fa-solid fa-pen-to-square'></i></a>
-                            </td>
-                            <td>
-                                <a  title='Deletar'
-                                    onclick='return confirm(\"Deseja Excluir?\")'
-                                    href='./ReceitaList.php?id=$item->id'><i class='fa-solid fa-trash'></i></a>
-                            </td>
-                        </tr>
-                        ";
-                    }
-                    
-                ?>
-                
+                                <?php
+                                    $ingredientes = $dbIngredientes->ingredientesPorReceita($item->id);
+                                    if (count($ingredientes) > 0) {
+                                        foreach ($ingredientes as $ing) {
+                                            echo "<li>$ing->quantidade de $ing->nome</li>";
+                                        }
+                                    } else {
+                                        echo "<li><em>Nenhum ingrediente cadastrado.</em></li>";
+                                    }
+                                ?>
+                                
+                            </ul>
+                        </td>
+
+                        <td>
+                            <a title='Editar' href='./ReceitaForm.php?id=<?= $item->id ?>'><i class='fa-solid fa-pen-to-square'></i></a>
+                        </td>
+
+                        <td>
+                            <a title='Deletar' onclick='return confirm("Deseja Excluir?")' href='./ReceitaList.php?id=<?= $item->id ?>'><i class='fa-solid fa-trash'></i></a>
+                        </td>
+
+                    </tr>
+
+                <?php endforeach; ?>
+
             </tbody>
         </table>
     </div>

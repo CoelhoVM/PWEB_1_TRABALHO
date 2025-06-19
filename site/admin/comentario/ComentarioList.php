@@ -6,6 +6,8 @@ include_once "../../header.php";
 
 $db = new db('comentarios');
 
+$db->checkLogin();
+
 if (!empty($_GET['id'])) {
     $db->destroy($_GET['id']);
 }
@@ -48,7 +50,7 @@ if (!empty($_POST)) {
 
     </form>
 
-    <div style="margin-top: 50px; padding: 30px; border-radius: 10px; box-shadow: 0 0 20px lightgray; background-color: white;">
+    <div style="margin-top: 50px; margin-bottom: 50px; padding: 30px; border-radius: 10px; box-shadow: 0 0 20px lightgray; background-color: white;">
 
         <table class="table table-striped mt-3">
 
@@ -66,30 +68,24 @@ if (!empty($_POST)) {
 
             <tbody>
 
-                <?php
+                <?php foreach ($dados as $item): ?>
 
-                foreach ($dados as $item) {
+                    <tr>
+                        <th scope="row"><?= $item->id ?></th>
+                        <td><?= $item->titulo ?></td>
+                        <td style="max-width: 300px"><?=$item->texto?></td>
+                        <td><?=$item->data?></td>
+                        <td><?=$item->id_usuario?></td>
+                        <td>
+                            <a title='Editar' href='./ComentarioForm.php?id=<?= $item->id ?>'><i class='fa-solid fa-pen-to-square'></i></a>
+                        </td>
 
-                        echo "
-                        <tr>
-                            <th scope='row'>$item->id</th>
-                            <td>$item->titulo</td>
-                            <td>$item->texto</td>
-                            <td>$item->data</td>
-                            <td>$item->id_usuario</td>
-                            <td>
-                                <a title='Editar' href='./ComentarioForm.php?id=$item->id'><i class='fa-solid fa-pen-to-square'></i></a>
-                            </td>
-                            <td>
-                                <a  title='Deletar'
-                                    onclick='return confirm(\"Deseja Excluir?\")'
-                                    href='./ComentarioList.php?id=$item->id'><i class='fa-solid fa-trash'></i></a>
-                            </td>
-                        </tr>
-                        ";
-                    }
-                    
-                ?>
+                        <td>
+                            <a title='Deletar' onclick='return confirm("Deseja Excluir?")' href='./ComentarioList.php?id=<?= $item->id ?>'><i class='fa-solid fa-trash'></i></a>
+                        </td>
+                    </tr>
+                
+                <?php endforeach; ?>
                 
             </tbody>
         </table>

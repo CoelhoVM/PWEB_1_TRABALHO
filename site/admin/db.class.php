@@ -146,32 +146,44 @@ class db {
         return $st->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public function login($dados)
+   public function login($dados)
     {
         $conn = $this->conn();
 
-        $sql = "SELECT * FROM $this->table_name WHERE login = ?";
-
+        $sql = "SELECT * FROM $this->table_name WHERE email = ?";
         $st = $conn->prepare($sql);
-        $st->execute([$dados['login']]);
+        $st->execute([$dados['email']]);
 
         $result = $st->fetchObject();
-        
-        if (password_verify($dados['senha'], $result->senha)) {
+
+        // Verifica se encontrou usuário e compara a senha
+        if ($result && password_verify($dados['senha'], $result->senha)) {
             return $result;
         } else {
             return "error";
         }
     }
 
+
     function checkLogin()
     {
         session_start();
 
-        if (empty($_SESSION['login'])) {
+        if (empty($_SESSION['email'])) {
             session_destroy();
-            header('Location: ../index.php?error=Sessao Expirada!');
+            header('Location: ../../index.php?error=Sessao Expirada!');
+            exit;
         }
     }
+
+    public function ingredientesPorReceita($id_receita) 
+    {
+        $conn = $this->conn();
+        $sql = "SELECT * FROM ingredientes WHERE id_receita = ?";
+        $st = $conn->prepare($sql);
+        $st->execute([$id_receita]);
+        return $st->fetchAll(PDO::FETCH_OBJ);
+    }
+
 }
 ?>
